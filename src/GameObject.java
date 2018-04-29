@@ -14,6 +14,7 @@ public abstract class GameObject {
 	public float radius = 1;
 	protected boolean isKinematic = false;
 	protected GameObject isHitObject;
+	protected boolean isInside = true;
 
 	// material
 	Color color;
@@ -31,18 +32,31 @@ public abstract class GameObject {
 	public void MovementUpdate(MainPanel mainPanel) {
 		position.x += moveDirection.x;
 		position.y += moveDirection.y;
+		float width = radius * scale.x;
+		float height = radius * scale.y;
 		if(isInnerWindow) {
-			float width = radius * scale.x;
 			if(position.x < width) {
 				position.x = width;
 			} else if(position.x > 640 - width) {
 				position.x = 640 - width;
-		}
-		float height = radius * scale.y;
-		if(position.y < height) {
-			position.y = height;
-		} else if(position.y > 480 - height) {
-			position.y = 480 - height;
+			}
+			if(position.y < height) {
+				position.y = height;
+			} else if(position.y > 480 - height) {
+				position.y = 480 - height;
+			}
+		} else {
+			isInside = true;
+			if(position.x < -width) {
+				isInside = false;
+			} else if(position.x > 640 + width) {
+				isInside = false;
+			}
+
+			if(position.y < -height) {
+				isInside = false;
+			} else if(position.y > 480 + height) {
+				isInside = false;
 			}
 		}
 	}

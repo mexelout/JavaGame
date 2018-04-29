@@ -2,20 +2,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
 
 public class MainPanel extends JPanel implements Runnable, KeyListener {
-	public Player player = new Player();
+	public ArrayList<GameObject> gameObjects = new ArrayList<>();
+	public Player player;
+	public Shot shot;
+	public Bullet[] playerBullets = new Bullet[100];
 	public Map<Integer, Boolean> keys = new HashMap<>();
-
-	public boolean fire = false;
-	public float[] bulletX = new float[100], bulletY = new float[100];
-	public float[] bulletMoveX = new float[100], bulletMoveY = new float[100];
-	public boolean[] bulletUse = new boolean[100];
-	public int bulletRate = 0;
 
 	public float[] enemyX = new float[100], enemyY = new float[100];
 	public float[] enemyMoveX = new float[100], enemyMoveY = new float[100];
@@ -31,20 +29,29 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 		keys.put(KeyEvent.VK_W, false);
 		keys.put(KeyEvent.VK_S, false);
 		keys.put(KeyEvent.VK_SPACE, false);
-		player.Start(this);
+		player = new Player();
+		gameObjects.add(player);
+		shot = new Shot();
+		gameObjects.add(shot);
+		Color[] cols = { Color.RED, Color.GREEN, Color.CYAN };
+		for(int i = 0; i < 100; ++i) {
+			playerBullets[i] = new Bullet();
+			playerBullets[i].color = cols[i % 3];
+			gameObjects.add(playerBullets[i]);
+		}
+		for(GameObject gameObject : gameObjects) {
+			gameObject.Start(this);
+		}
+
 		t = new Thread(this);
 		t.start();
 	}
 
 	public void paintComponent(Graphics g) {
+		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, 640, 480);
-		player.Display(g);
-
-		g.setColor(Color.GRAY);
-		for(int i = 0; i < 100; i++) {
-			if(bulletUse[i]) {
-				g.fillOval((int)bulletX[i] - 5, (int)bulletY[i] - 5, 10, 10);
-			}
+		for(GameObject gameObject : gameObjects) {
+			gameObject.Display(g);
 		}
 	}
 
@@ -65,43 +72,12 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		while(true) {
-			player.Update(this);
-			player.MovementUpdate(this);
-			// player.Collision()
-
-			// bullet fire processing
-			if(fire && bulletRate == 0) {
-				bulletRate = 10;
-				for(int i = 0; i < 100; ++i) {
-					if(bulletUse[i] == false) {
-						bulletUse[i] = true;
-						bulletX[i] = player.position.x;
-						bulletY[i] = player.position.y;
-						bulletMoveX[i] = (float)Math.sin(Math.toRadians(player.angle)) * 5;
-						bulletMoveY[i] = (float)Math.cos(Math.toRadians(player.angle)) * 5;
-						break;
-					}
+			for(GameObject gameObject : gameObjects) {
+				gameObject.Update(this);
+				gameObject.MovementUpdate(this);
+				for(GameObject otherGameObject : gameObjects) {
+					gameObject.Collision(otherGameObject);
 				}
-			}
-			for(int i = 0; i < 100; ++i) {
-				if(bulletUse[i]) {
-					bulletX[i] += bulletMoveX[i];
-					bulletY[i] += bulletMoveY[i];
-					if(bulletX[i] > 620 && bulletX[i] < 0) {
-						bulletUse[i] = false;
-					}
-					if(bulletY[i] > 460 && bulletY[i] < 0) {
-						bulletUse[i] = false;
-					}
-				}
-			}
-			bulletRate -= (bulletRate > 0) ? 1 : 0;
-
-			// refresh
-			fire = false;
-
-			// enemy processing
-			for(int i = 0; i < 100; i++) {
 			}
 
 			// wait 60 fps

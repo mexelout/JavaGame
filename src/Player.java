@@ -8,7 +8,7 @@ public class Player extends GameObject {
 	public void Start(MainPanel mainPanel) {
 		position.x = 100;
 		position.y = 100;
-		radius = 10;
+		radius = 20;
 		color = Color.RED;
 	}
 
@@ -17,23 +17,20 @@ public class Player extends GameObject {
 		moveDirection.setLocation(0, 0);
 		// key processing
 		if(mainPanel.keys.get(KeyEvent.VK_A)) {
-			moveDirection.x = -1;
+			moveDirection.x = -2;
 			angle = 270;
 		}
 		if(mainPanel.keys.get(KeyEvent.VK_D)) {
-			moveDirection.x = 1;
+			moveDirection.x = 2;
 			angle = 90;
 		}
 		if(mainPanel.keys.get(KeyEvent.VK_W)) {
-			moveDirection.y = -1;
+			moveDirection.y = -2;
 			angle = 180;
 		}
 		if(mainPanel.keys.get(KeyEvent.VK_S)) {
-			moveDirection.y = 1;
+			moveDirection.y = 2;
 			angle = 0;
-		}
-		if(mainPanel.keys.get(KeyEvent.VK_SPACE)) {
-			mainPanel.fire = true;
 		}
 	}
 
@@ -54,5 +51,4 @@ public class Player extends GameObject {
 		g.drawLine((int)p[0].x, (int)p[0].y, (int)p[1].x, (int)p[1].y);
 		g.drawLine((int)p[1].x, (int)p[1].y, (int)p[2].x, (int)p[2].y);
 	}
-
 }
