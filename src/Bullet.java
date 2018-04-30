@@ -6,7 +6,7 @@ public class Bullet extends GameObject {
 	@Override
 	public void start(MainPanel mainPanel) {
 		isInnerWindow = false;
-		radius = 10;
+		radius = 5;
 	}
 
 	@Override
@@ -14,7 +14,7 @@ public class Bullet extends GameObject {
 		if(isUse) {
 			if(isInside() == false) {
 				isUse = false;
-				moveDirection.setLocation(0, 0);
+				moveDirection.zero();
 			}
 		}
 	}

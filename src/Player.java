@@ -3,46 +3,56 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
+import math.Vector2D;
+
 public class Player extends GameObject {
 	@Override
 	public void start(MainPanel mainPanel) {
 		position.x = 100;
 		position.y = 100;
-		radius = 20;
+		radius = 10;
 		color = Color.RED;
 	}
 
 	@Override
 	public void update(MainPanel mainPanel) {
-		moveDirection.setLocation(0, 0);
+		moveDirection.zero();
 		// key processing
 		if(mainPanel.keys.get(KeyEvent.VK_A)) {
-			moveDirection.x = -2;
-			angle = 270;
-		}
-		if(mainPanel.keys.get(KeyEvent.VK_D)) {
-			moveDirection.x = 2;
-			angle = 90;
-		}
-		if(mainPanel.keys.get(KeyEvent.VK_W)) {
-			moveDirection.y = -2;
+			if(mainPanel.keys.get(KeyEvent.VK_W)) {
+				angle = -135;
+			} else if(mainPanel.keys.get(KeyEvent.VK_S)) {
+				angle = -45;
+			} else {
+				angle = -90;
+			}
+			moveDirection = front().mulEq(2);
+		} else if(mainPanel.keys.get(KeyEvent.VK_D)) {
+			if(mainPanel.keys.get(KeyEvent.VK_W)) {
+				angle = 135;
+			} else if(mainPanel.keys.get(KeyEvent.VK_S)) {
+				angle = 45;
+			} else {
+				angle = 90;
+			}
+			moveDirection = front().mulEq(2);
+		} else if(mainPanel.keys.get(KeyEvent.VK_W)) {
 			angle = 180;
-		}
-		if(mainPanel.keys.get(KeyEvent.VK_S)) {
-			moveDirection.y = 2;
+			moveDirection = front().mulEq(2);
+		} else if(mainPanel.keys.get(KeyEvent.VK_S)) {
 			angle = 0;
+			moveDirection = front().mulEq(2);
 		}
 	}
 
 	@Override
 	public void display(Graphics g) {
 		Point2D.Float[] p = { new Point2D.Float(-10, 10), new Point2D.Float(0, -10), new Point2D.Float(10, 10) };
-		float s = (float)Math.sin(Math.toRadians(angle));
-		float c = (float)Math.cos(Math.toRadians(angle));
+		Vector2D front = front();
 
 		for(int i = 0; i < 3; ++i) {
 			p[i].setLocation(p[i].x * scale.x, p[i].y * scale.y); // scale
-			p[i].setLocation(c * p[i].x - s * p[i].y, (s * p[i].x + c * p[i].y) * -1); // rotation
+			p[i].setLocation(front.y * p[i].x - front.x * p[i].y, (front.x * p[i].x + front.y * p[i].y) * -1); // rotation
 			p[i].setLocation(p[i].x + position.x, p[i].y + position.y); // position
 		}
 

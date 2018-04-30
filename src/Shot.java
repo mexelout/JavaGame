@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
+
+import math.Vector2D;
 
 public class Shot extends GameObject {
 	public boolean fire = false;
@@ -19,7 +20,7 @@ public class Shot extends GameObject {
 			for(Bullet bullet : mainPanel.playerBullets) {
 				if(bullet.isUse == false) {
 					bullet.isUse = true;
-					bullet.position = (Point2D.Float)mainPanel.player.position.clone();
+					bullet.position = (Vector2D)mainPanel.player.position.clone();
 					bullet.moveDirection.x = (float)Math.sin(Math.toRadians(mainPanel.player.angle)) * 5;
 					bullet.moveDirection.y = (float)Math.cos(Math.toRadians(mainPanel.player.angle)) * 5;
 					break;

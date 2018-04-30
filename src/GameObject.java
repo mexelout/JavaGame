@@ -1,15 +1,16 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.geom.Point2D;
+
+import math.Vector2D;
 
 public abstract class GameObject {
 	// transform
-	public Point2D.Float position;
-	public Point2D.Float scale;
+	public Vector2D position;
+	public Vector2D scale;
 	public float angle = 0;
 
 	// charactor controlle parameters
-	public Point2D.Float moveDirection;
+	public Vector2D moveDirection;
 	protected boolean isInnerWindow = true;
 	public float radius = 1;
 	protected boolean isKinematic = false;
@@ -19,9 +20,9 @@ public abstract class GameObject {
 	Color color;
 
 	GameObject() {
-		position = new Point2D.Float(0, 0);
-		scale = new Point2D.Float(1, 1);
-		moveDirection = new Point2D.Float(0, 0);
+		position = new Vector2D(0, 0);
+		scale = new Vector2D(1, 1);
+		moveDirection = new Vector2D(0, 0);
 	}
 
 	abstract public void start(MainPanel mainPanel);
@@ -32,15 +33,17 @@ public abstract class GameObject {
 		position.x += moveDirection.x;
 		position.y += moveDirection.y;
 		if(isInnerWindow) {
-			if(position.x < width()) {
-				position.x = width();
-			} else if(position.x > 640 - width()) {
-				position.x = 640 - width();
+			float halfWidth = width() / 2;
+			float halfHeight = height() / 2;
+			if(position.x < halfWidth) {
+				position.x = halfWidth;
+			} else if(position.x > 640 - halfWidth) {
+				position.x = 640 - halfWidth;
 			}
-			if(position.y < height()) {
-				position.y = height();
-			} else if(position.y > 480 - height()) {
-				position.y = 480 - height();
+			if(position.y < halfHeight) {
+				position.y = halfHeight;
+			} else if(position.y > 480 - halfHeight) {
+				position.y = 480 - halfHeight;
 			}
 		}
 	}
@@ -65,5 +68,12 @@ public abstract class GameObject {
 
 	public float height() {
 		return (radius + radius) * scale.y;
+	}
+
+	public Vector2D front() {
+		return new Vector2D(
+			(float)Math.sin(Math.toRadians(angle)),
+			(float)Math.cos(Math.toRadians(angle))
+		);
 	}
 }
