@@ -7,11 +7,11 @@ public class Shot extends GameObject {
 	private float fireRate = 0;
 
 	@Override
-	public void Start(MainPanel mainPanel) {
+	public void start(MainPanel mainPanel) {
 	}
 
 	@Override
-	public void Update(MainPanel mainPanel) {
+	public void update(MainPanel mainPanel) {
 		fire = mainPanel.keys.get(KeyEvent.VK_SPACE);
 		// bullet fire processing
 		if(fire && fireRate <= 0) {
@@ -30,6 +30,6 @@ public class Shot extends GameObject {
 	}
 
 	@Override
-	public void Display(Graphics g) {
+	public void display(Graphics g) {
 	}
 }

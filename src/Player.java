@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 
 public class Player extends GameObject {
 	@Override
-	public void Start(MainPanel mainPanel) {
+	public void start(MainPanel mainPanel) {
 		position.x = 100;
 		position.y = 100;
 		radius = 20;
@@ -13,7 +13,7 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void Update(MainPanel mainPanel) {
+	public void update(MainPanel mainPanel) {
 		moveDirection.setLocation(0, 0);
 		// key processing
 		if(mainPanel.keys.get(KeyEvent.VK_A)) {
@@ -35,7 +35,7 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void Display(Graphics g) {
+	public void display(Graphics g) {
 		Point2D.Float[] p = { new Point2D.Float(-10, 10), new Point2D.Float(0, -10), new Point2D.Float(10, 10) };
 		float s = (float)Math.sin(Math.toRadians(angle));
 		float c = (float)Math.cos(Math.toRadians(angle));

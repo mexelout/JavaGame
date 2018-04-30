@@ -40,7 +40,7 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 			gameObjects.add(playerBullets[i]);
 		}
 		for(GameObject gameObject : gameObjects) {
-			gameObject.Start(this);
+			gameObject.start(this);
 		}
 
 		t = new Thread(this);
@@ -51,7 +51,7 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, 640, 480);
 		for(GameObject gameObject : gameObjects) {
-			gameObject.Display(g);
+			gameObject.display(g);
 		}
 	}
 
@@ -73,10 +73,10 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while(true) {
 			for(GameObject gameObject : gameObjects) {
-				gameObject.Update(this);
-				gameObject.MovementUpdate(this);
+				gameObject.update(this);
+				gameObject.movementUpdate(this);
 				for(GameObject otherGameObject : gameObjects) {
-					gameObject.Collision(otherGameObject);
+					gameObject.collision(otherGameObject);
 				}
 			}
 

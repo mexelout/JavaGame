@@ -24,46 +24,46 @@ public abstract class GameObject {
 		moveDirection = new Point2D.Float(0, 0);
 	}
 
-	abstract public void Start(MainPanel mainPanel);
-	abstract public void Update(MainPanel mainPanel);
-	abstract public void Display(Graphics g);
+	abstract public void start(MainPanel mainPanel);
+	abstract public void update(MainPanel mainPanel);
+	abstract public void display(Graphics g);
 
-	public void MovementUpdate(MainPanel mainPanel) {
+	public void movementUpdate(MainPanel mainPanel) {
 		position.x += moveDirection.x;
 		position.y += moveDirection.y;
 		if(isInnerWindow) {
-			if(position.x < Width()) {
-				position.x = Width();
-			} else if(position.x > 640 - Width()) {
-				position.x = 640 - Width();
+			if(position.x < width()) {
+				position.x = width();
+			} else if(position.x > 640 - width()) {
+				position.x = 640 - width();
 			}
-			if(position.y < Height()) {
-				position.y = Height();
-			} else if(position.y > 480 - Height()) {
-				position.y = 480 - Height();
+			if(position.y < height()) {
+				position.y = height();
+			} else if(position.y > 480 - height()) {
+				position.y = 480 - height();
 			}
 		}
 	}
 
-	public void Collision(GameObject gameObject) {
+	public void collision(GameObject gameObject) {
 	}
 
-	public boolean IsInside() {
-		if(position.x < -Width() ||
-			position.x > 640 + Width() ||
-			position.y < -Height() ||
-			position.y > 480 + Height()) {
+	public boolean isInside() {
+		if(position.x < -width() ||
+			position.x > 640 + width() ||
+			position.y < -height() ||
+			position.y > 480 + height()) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public float Width() {
+	public float width() {
 		return (radius + radius) * scale.x;
 	}
 
-	public float Height() {
+	public float height() {
 		return (radius + radius) * scale.y;
 	}
 }

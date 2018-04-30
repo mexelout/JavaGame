@@ -4,15 +4,15 @@ public class Bullet extends GameObject {
 	boolean isUse = false;
 
 	@Override
-	public void Start(MainPanel mainPanel) {
+	public void start(MainPanel mainPanel) {
 		isInnerWindow = false;
 		radius = 10;
 	}
 
 	@Override
-	public void Update(MainPanel mainPanel) {
+	public void update(MainPanel mainPanel) {
 		if(isUse) {
-			if(IsInside() == false) {
+			if(isInside() == false) {
 				isUse = false;
 				moveDirection.setLocation(0, 0);
 			}
@@ -20,7 +20,7 @@ public class Bullet extends GameObject {
 	}
 
 	@Override
-	public void Display(Graphics g) {
+	public void display(Graphics g) {
 		if(isUse) {
 			g.setColor(color);
 			g.fillOval((int)position.x - 5, (int)position.y - 5, 10, 10);
