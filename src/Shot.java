@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 public class Shot extends GameObject {
 	public boolean fire = false;
-	private float bulletRate = 0;
+	private float fireRate = 0;
 
 	@Override
 	public void Start(MainPanel mainPanel) {
@@ -14,8 +14,8 @@ public class Shot extends GameObject {
 	public void Update(MainPanel mainPanel) {
 		fire = mainPanel.keys.get(KeyEvent.VK_SPACE);
 		// bullet fire processing
-		if(fire && bulletRate <= 0) {
-			bulletRate = 10;
+		if(fire && fireRate <= 0) {
+			fireRate = 10;
 			for(Bullet bullet : mainPanel.playerBullets) {
 				if(bullet.isUse == false) {
 					bullet.isUse = true;
@@ -26,7 +26,7 @@ public class Shot extends GameObject {
 				}
 			}
 		}
-		bulletRate -= (bulletRate > 0) ? 1 : 0;
+		fireRate -= (fireRate > 0) ? 1 : 0;
 	}
 
 	@Override
