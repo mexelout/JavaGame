@@ -12,7 +12,7 @@ public class Bullet extends GameObject {
 	@Override
 	public void Update(MainPanel mainPanel) {
 		if(isUse) {
-			if(isInside == false) {
+			if(IsInside() == false) {
 				isUse = false;
 				moveDirection.setLocation(0, 0);
 			}

@@ -14,7 +14,6 @@ public abstract class GameObject {
 	public float radius = 1;
 	protected boolean isKinematic = false;
 	protected GameObject isHitObject;
-	protected boolean isInside = true;
 
 	// material
 	Color color;
@@ -32,35 +31,39 @@ public abstract class GameObject {
 	public void MovementUpdate(MainPanel mainPanel) {
 		position.x += moveDirection.x;
 		position.y += moveDirection.y;
-		float width = radius * scale.x;
-		float height = radius * scale.y;
 		if(isInnerWindow) {
-			if(position.x < width) {
-				position.x = width;
-			} else if(position.x > 640 - width) {
-				position.x = 640 - width;
+			if(position.x < Width()) {
+				position.x = Width();
+			} else if(position.x > 640 - Width()) {
+				position.x = 640 - Width();
 			}
-			if(position.y < height) {
-				position.y = height;
-			} else if(position.y > 480 - height) {
-				position.y = 480 - height;
-			}
-		} else {
-			isInside = true;
-			if(position.x < -width) {
-				isInside = false;
-			} else if(position.x > 640 + width) {
-				isInside = false;
-			}
-
-			if(position.y < -height) {
-				isInside = false;
-			} else if(position.y > 480 + height) {
-				isInside = false;
+			if(position.y < Height()) {
+				position.y = Height();
+			} else if(position.y > 480 - Height()) {
+				position.y = 480 - Height();
 			}
 		}
 	}
 
 	public void Collision(GameObject gameObject) {
+	}
+
+	public boolean IsInside() {
+		if(position.x < -Width() ||
+			position.x > 640 + Width() ||
+			position.y < -Height() ||
+			position.y > 480 + Height()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public float Width() {
+		return (radius + radius) * scale.x;
+	}
+
+	public float Height() {
+		return (radius + radius) * scale.y;
 	}
 }
