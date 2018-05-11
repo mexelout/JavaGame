@@ -14,11 +14,7 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 	public Shot shot;
 	public Bullet[] playerBullets = new Bullet[100];
 	public Map<Integer, Boolean> keys = new HashMap<>();
-
-	public float[] enemyX = new float[100], enemyY = new float[100];
-	public float[] enemyMoveX = new float[100], enemyMoveY = new float[100];
-	public boolean[] enemyUse = new boolean[100];
-	public int enemyRate = 0;
+	public Enemy[] enemies = new Enemy[100];
 
 	private Thread t;
 
@@ -38,6 +34,10 @@ public class MainPanel extends JPanel implements Runnable, KeyListener {
 			playerBullets[i] = new Bullet();
 			playerBullets[i].color = cols[i % 3];
 			gameObjects.add(playerBullets[i]);
+		}
+		for(int i = 0; i < 100; ++i) {
+			enemies[i] = new Enemy();
+			gameObjects.add(enemies[i]);
 		}
 		for(GameObject gameObject : gameObjects) {
 			gameObject.start(this);
