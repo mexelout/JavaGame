@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 
 import math.Vector2D;
 
@@ -47,13 +46,13 @@ public class Player extends GameObject {
 
 	@Override
 	public void display(Graphics g) {
-		Point2D.Float[] p = { new Point2D.Float(-10, 10), new Point2D.Float(0, -10), new Point2D.Float(10, 10) };
+		Vector2D[] p = { new Vector2D(-10, 10), new Vector2D(0, -10), new Vector2D(10, 10) };
 		Vector2D front = front();
 
 		for(int i = 0; i < 3; ++i) {
-			p[i].setLocation(p[i].x * scale.x, p[i].y * scale.y); // scale
-			p[i].setLocation(front.y * p[i].x - front.x * p[i].y, (front.x * p[i].x + front.y * p[i].y) * -1); // rotation
-			p[i].setLocation(p[i].x + position.x, p[i].y + position.y); // position
+			p[i].set(p[i].x * scale.x, p[i].y * scale.y); // scale
+			p[i].set(front.y * p[i].x - front.x * p[i].y, (front.x * p[i].x + front.y * p[i].y) * -1); // rotation
+			p[i].addEq(position); // position
 		}
 
 		g.setColor(color);

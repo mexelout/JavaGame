@@ -15,6 +15,11 @@ public class Vector2D {
 	public Vector2D clone() {
 		return new Vector2D(x, y);
 	}
+	public Vector2D set(float x, float y) {
+		this.x = x;
+		this.y = y;
+		return this;
+	}
 	public Vector2D add(Vector2D vec) {
 		return new Vector2D(x + vec.x, y + vec.y);
 	}

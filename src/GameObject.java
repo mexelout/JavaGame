@@ -71,9 +71,10 @@ public abstract class GameObject {
 	}
 
 	public Vector2D front() {
+		double radian = Math.toRadians(angle);
 		return new Vector2D(
-			(float)Math.sin(Math.toRadians(angle)),
-			(float)Math.cos(Math.toRadians(angle))
+			(float)Math.sin(radian),
+			(float)Math.cos(radian)
 		);
 	}
 }
